@@ -1,25 +1,42 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import GamesCollection from './components/GamesCollection'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// MVP:
+// User will be able to:
+// Browse store and can thumbs up or down game
+// Leave a review for the game and can delete review
+// Filter games on genre or rating and sale
+// Add likes/dislikes ratio (stretch: display the bar like they do on youtube)
+
+
+
+import React, { Component } from 'react'
+
+export default class App extends Component {
+  state ={
+    games: [],
+  }
+
+
+  componentDidMount= async ()=>{
+    try { 
+      let promise = await fetch('http://localhost:4000/games')
+      let json = await promise.json()
+      this.setState({
+        games: json
+      })
+    } catch(error){
+      console.log(error)
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <GamesCollection games={this.state.games} />
+      </div>
+    )
+  }
 }
 
-export default App;
