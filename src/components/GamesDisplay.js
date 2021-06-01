@@ -19,7 +19,7 @@ export default class GamesDisplay extends Component {
         likes: this.props.game.likes,
         dislikes: this.props.game.dislikes,
         showForm: false,
-        reviews: this.props.game.Reviews
+        reviews: this.props.game.reviews
     }
 
 
@@ -45,10 +45,9 @@ export default class GamesDisplay extends Component {
     //======================================================================
 
     handleLikes = ()=>{
-        console.log('like button pressed')
-
+        let likes = this.state.likes + 1         
         this.setState({
-            likes: this.state.likes + 1
+            likes: likes
         })
         fetch(`http://localhost:4000/games/${this.props.game.id}`, {
             method: "PATCH",
@@ -56,7 +55,7 @@ export default class GamesDisplay extends Component {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                likes: this.state.likes
+                likes: likes
             }),
             })
             .then((r) => r.json())
@@ -64,8 +63,9 @@ export default class GamesDisplay extends Component {
 
     handleDislikes = ()=>{
         console.log('dislike button pressed')
+        let dislikes = this.state.dislikes + 1
         this.setState({
-            dislikes: this.state.dislikes + 1
+            dislikes: dislikes
         })
         fetch(`http://localhost:4000/games/${this.props.game.id}`, {
             method: "PATCH",
@@ -73,7 +73,7 @@ export default class GamesDisplay extends Component {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                dislikes: this.state.dislikes
+                dislikes: dislikes
             }),
             })
             .then((r) => r.json())

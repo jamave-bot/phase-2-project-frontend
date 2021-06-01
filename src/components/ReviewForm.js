@@ -12,20 +12,24 @@ export default class ReviewForm extends Component {
 
     handleSubmit = (evt)=>{
         evt.preventDefault()
-        const newArr = [...this.props.game.Reviews, this.state]
+        const newArr = [...this.props.game.reviews, this.state]
         fetch(`http://localhost:4000/games/${this.props.game.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                Reviews: newArr
+                reviews: newArr
             }),
             })
             .then((r) => r.json())
             .then((gameObj) => {
-                console.log(gameObj.Reviews[gameObj.Reviews.length - 1])
-                this.props.addReview(gameObj.Reviews[gameObj.Reviews.length - 1])
+                console.log(gameObj.reviews[gameObj.reviews.length - 1])
+                this.props.addReview(gameObj.reviews[gameObj.reviews.length - 1])
+                this.setState({
+                    name: '',
+                    review: ''
+                })
             });
     }
 
