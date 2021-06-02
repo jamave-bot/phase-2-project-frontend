@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReviewForm from './ReviewForm'
 import YouTube from 'react-youtube'
 import { Image } from 'semantic-ui-react'
+import Game from './Game'
 //props: game: the game object
 // "id": 1,
 // "name": "name",
@@ -24,23 +25,6 @@ export default class GamesDisplay extends Component {
         reviews: this.props.game.reviews
     }
 
-
-    handleClick=()=>{
-        this.setState({
-            showDetails: !this.state.showDetails
-        })
-    }
-
-
-    
-    showGame = ()=>{
-        return <>
-            <p>name: {this.props.game.name}</p>
-            <Image src={this.props.game.image} size='small'/>
-            <p>price: {this.props.game.price !== 0 ? this.props.game.price: 'Free'}</p>
-            <button onClick={this.handleClick}>Show more</button>
-        </>
-    }
 
     handleLikes = ()=>{
         let likes = this.state.likes + 1         
@@ -102,57 +86,14 @@ export default class GamesDisplay extends Component {
         })
     }
 
-
-    // Pauses the video when it loads
-    // _onReady(event) {
-    //     // access to player in all event handlers via event.target
-    //     event.target.pauseVideo();
-    //   }
-
-    showAll = () =>{
-        const opts = {
-            height: '390',
-            width: '640',
-            playerVars: {
-              // https://developers.google.com/youtube/player_parameters
-              autoplay: 1,
-            },
-          };
-      
-
-        return <>
-        <p>name: {this.props.game.name}</p>
-        <p>image url: <Image src={this.props.game.image} size='medium'/></p>
-        <p>price: {this.props.game.price !== 0 ? this.props.game.price: 'Free'}</p>
-        <p>trailer: <YouTube videoId={this.props.game.trailer} opts={opts} onReady={this._onReady} />  </p>
-
-
-        {/* LIKES ND DISLIKES ARE SEPARATE/WE'RE GONNA SHOW A RATIO  */}
-        <p>likes: {this.state.likes} </p>
-        <button name='like' onClick={this.handleLikes}>Like</button>
-
-        <p>dislikes: {this.state.dislikes} </p>
-        <button name='dislike' onClick={this.handleDislikes}>Dislike</button>
-
-        <p>onSale: {this.props.game.onSale}</p>
-        <p>Year: {this.props.game.year} </p>
-        <p>Reviews: {this.showReviews()}</p>
-        <button onClick={this.showForm}>Add a Review </button>
-        {this.state.showForm ? <ReviewForm game={this.props.game} addReview={this.addReview}/> : ""}
-
-
-        <p>Genres: {this.props.game.Genres}</p>
-        <button onClick={this.handleClick}>Show Less</button>
-        </>
-    }
-    
-    
     render() {
-
+        console.log("Inside GamesDisplay: ", this.props.game)
+        const matchingGame = this.props.game.find(game=> game.id === this.props.match.params.gameId)
         return (
             <div>
-                {this.state.showDetails ? this.showAll() : this.showGame()}
+                <Game key={matchingGame === undefined ? null:matchingGame.id} game={matchingGame}/>
             </div>
         )
     }
 }
+

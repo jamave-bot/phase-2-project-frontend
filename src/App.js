@@ -98,8 +98,13 @@ export default class App extends Component {
     console.log("GENRE ARR: ", filteredByGenreArr)
     return (
       <div>
-        <SearchForm changeSearchTerm={this.changeSearchTerm} changeGenreFilter={this.changeGenreFilter}/>
-        <GamesCollection games={this.state.genreFilter.length? filteredByGenreArr : filteredByNameArr} />
+          <SearchForm changeSearchTerm={this.changeSearchTerm} changeGenreFilter={this.changeGenreFilter}/>
+        <Switch>
+          {/* <GamesCollection games={this.state.genreFilter.length? filteredByGenreArr : filteredByNameArr} /> */}
+          <Route path='/games'
+          render={routerProps => <GamesCollection {...routerProps} games={this.state.games} />}></Route>
+          <Route path='/'></Route>
+        </Switch>
       </div>
     )
   }
