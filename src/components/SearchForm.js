@@ -18,6 +18,7 @@ export default class SearchForm extends Component {
     }
 
     handleClick = (evt) =>{
+        console.log("VALUE: ", evt.target.value)
         this.setState((prevState) => ({ [evt.target.value]: !prevState[evt.target.value] }))
         this.props.changeGenreFilter(evt.target.value)
     }

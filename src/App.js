@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 import './App.css';
 import GamesCollection from './components/GamesCollection'
-
+import {Switch, Route} from 'react-router-dom'
 // MVP:
 // User will be able to:
 // Browse store and can thumbs up or down game
@@ -66,7 +66,6 @@ export default class App extends Component {
     }
     return false;
   }
-  
 
   changeSearchTerm = (newTerm)=>{
     this.setState({
@@ -89,14 +88,14 @@ export default class App extends Component {
   }
 
   render() {
-    console.log(this.state)
-
+    // console.log(this.state)
     const filteredByNameArr = this.state.games.filter(game =>{
       return  game.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())
     })
     const filteredByGenreArr = filteredByNameArr.filter(game =>{
       return this.findCommonElements(game.genres, this.state.genreFilter) 
     })
+    console.log("GENRE ARR: ", filteredByGenreArr)
     return (
       <div>
         <SearchForm changeSearchTerm={this.changeSearchTerm} changeGenreFilter={this.changeGenreFilter}/>

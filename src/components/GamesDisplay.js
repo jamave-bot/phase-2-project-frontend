@@ -42,10 +42,6 @@ export default class GamesDisplay extends Component {
         </>
     }
 
-    //======================================================================
-    //pressing like also presses the div which hides the info!!!!!!!!!!!!
-    //======================================================================
-
     handleLikes = ()=>{
         let likes = this.state.likes + 1         
         this.setState({
