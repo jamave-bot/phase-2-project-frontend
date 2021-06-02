@@ -9,7 +9,8 @@ export default class SearchForm extends Component {
         adventure: false,
         "co-op": false,
         pvp:false,
-        mmo: false
+        mmo: false,
+        action: false,
     }
 
     handleChange = (evt) =>{
@@ -31,6 +32,8 @@ export default class SearchForm extends Component {
                 <Button toggle active={this.state["co-op"]} value='co-op' onClick={this.handleClick}>Co-op</Button>
                 <Button toggle active={this.state.pvp} value='pvp' onClick={this.handleClick}>PvP</Button>
                 <Button toggle active={this.state.mmo} value='mmo'onClick={this.handleClick}>MMO</Button>
+                <Button toggle active={this.state.action} value='action'onClick={this.handleClick}>Action</Button>
+
 
             </div>
         )

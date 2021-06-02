@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import ReviewForm from './ReviewForm'
+import YouTube from 'react-youtube'
+import { Image } from 'semantic-ui-react'
 //props: game: the game object
 // "id": 1,
 // "name": "name",
@@ -34,8 +36,8 @@ export default class GamesDisplay extends Component {
     showGame = ()=>{
         return <>
             <p>name: {this.props.game.name}</p>
-            <p>image url: {this.props.game.image} </p>
-            <p>price: {this.props.game.price}</p>
+            <Image src={this.props.game.image} size='small'/>
+            <p>price: {this.props.game.price !== 0 ? this.props.game.price: 'Free'}</p>
             <button onClick={this.handleClick}>Show more</button>
         </>
     }
@@ -97,19 +99,36 @@ export default class GamesDisplay extends Component {
     showReviews = ()=>{
         return this.state.reviews.map(review =>{
             return <>
-                <p>Review: {review.review}</p>
-                <p>Name: {review.name}</p>
+                <p>{review.review}</p>
+                <p>- {review.name}</p>
                 <button>Delete Review </button>
             </>
         })
     }
 
+
+    // Pauses the video when it loads
+    // _onReady(event) {
+    //     // access to player in all event handlers via event.target
+    //     event.target.pauseVideo();
+    //   }
+
     showAll = () =>{
+        const opts = {
+            height: '390',
+            width: '640',
+            playerVars: {
+              // https://developers.google.com/youtube/player_parameters
+              autoplay: 1,
+            },
+          };
+      
+
         return <>
         <p>name: {this.props.game.name}</p>
-        <p>image url: {this.props.game.image} </p>
-        <p>price: {this.props.game.price}</p>
-        <p>trailer url: {this.props.game.trailer}  </p>
+        <p>image url: <Image src={this.props.game.image} size='medium'/></p>
+        <p>price: {this.props.game.price !== 0 ? this.props.game.price: 'Free'}</p>
+        <p>trailer: <YouTube videoId={this.props.game.trailer} opts={opts} onReady={this._onReady} />  </p>
 
 
         {/* LIKES ND DISLIKES ARE SEPARATE/WE'RE GONNA SHOW A RATIO  */}
@@ -120,7 +139,7 @@ export default class GamesDisplay extends Component {
         <button name='dislike' onClick={this.handleDislikes}>Dislike</button>
 
         <p>onSale: {this.props.game.onSale}</p>
-        <p>Year: {this.props.game.Year} </p>
+        <p>Year: {this.props.game.year} </p>
         <p>Reviews: {this.showReviews()}</p>
         <button onClick={this.showForm}>Add a Review </button>
         {this.state.showForm ? <ReviewForm game={this.props.game} addReview={this.addReview}/> : ""}
