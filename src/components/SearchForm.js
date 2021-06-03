@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Input } from 'semantic-ui-react'
-import { Button } from 'semantic-ui-react'
+import { Input, Button, Grid } from 'semantic-ui-react'
 
 export default class SearchForm extends Component {
 
@@ -25,8 +24,18 @@ export default class SearchForm extends Component {
 
     render() {
         return (
-            <div>
-                <Input placeholder='Enter game name...' onChange={this.handleChange}/>
+            <div className="searchForm">
+                <br></br>
+                <Grid>
+                    <Grid.Column width={2}>
+                    </Grid.Column>
+                    <Grid.Column width={12}>
+                    <Input fluid placeholder='Enter game name...' onChange={this.handleChange}/>
+                    </Grid.Column>
+                    <Grid.Column width={2}>
+                    </Grid.Column>
+                </Grid>
+
                 <br></br>
                 <Button toggle active={this.state.horror} value='horror' onClick={this.handleClick}>Horror</Button>
                 <Button toggle active={this.state.adventure} value='adventure'onClick={this.handleClick}>Adventure</Button>

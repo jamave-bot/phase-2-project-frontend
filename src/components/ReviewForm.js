@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import {Form, Input} from 'semantic-ui-react'
 
 
 //props: addReview
@@ -43,11 +43,17 @@ export default class ReviewForm extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <input type='text' placeholder='Enter Name' name='name' onChange={this.handleChange} value={this.state.name}/>
-                <input type='text' placeholder='Review...' name='review' onChange={this.handleChange} value={this.state.review}/>
-                <input type='submit' />
-            </form>
+            <Form onSubmit={this.handleSubmit}>
+                <Form.Field >
+                    <label>Name</label>
+                    <Input type='text' name='name' onChange={this.handleChange} value={this.state.name}/>
+                </Form.Field>
+                <Form.Field >
+                    <label>Review</label>
+                    <Form.TextArea type='text' name='review' onChange={this.handleChange} value={this.state.review}/>
+                </Form.Field>
+                <Form.Button>Submit</Form.Button>
+            </Form>
         )
     }
 }

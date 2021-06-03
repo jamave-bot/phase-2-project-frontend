@@ -2,19 +2,22 @@ import React, { Component } from 'react'
 import {Switch, Link, Route} from 'react-router-dom'
 import YouTube from 'react-youtube'
 import ReviewForm from './ReviewForm'
-import { Image } from 'semantic-ui-react'
+import { Button, Image, Grid, Segment } from 'semantic-ui-react'
+
 
 export default class GameDetail extends Component {
     state={
         likes: this.props.game.likes,
         dislikes: this.props.game.dislikes,
         showForm: false,
-        reviews: this.props.game.reviews
+        reviews: this.props.game.reviews,
+        showReviewButton: true
     }
     handleLikes = ()=>{
-        let likes = this.state.likes + 1         
+        let likes = this.state.likes
+        let newLikes = likes += 1         
         this.setState({
-            likes: likes
+            likes: newLikes
         })
         fetch(`http://localhost:4000/games/${this.props.game.id}`, {
             method: "PATCH",
@@ -22,7 +25,7 @@ export default class GameDetail extends Component {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                likes: likes
+                likes: newLikes
             }),
             })
             .then((r) => r.json())
@@ -30,24 +33,30 @@ export default class GameDetail extends Component {
 
     handleDislikes = ()=>{
         console.log('dislike button pressed')
-        let dislikes = this.state.dislikes + 1
-        this.setState({
-            dislikes: dislikes
-        })
+        let dislikes = this.state.dislikes
+        let newDislikes = dislikes += 1         
+
+        // this.setState({
+        //     dislikes: newDislikes
+        // })
         fetch(`http://localhost:4000/games/${this.props.game.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                dislikes: dislikes
+                dislikes: newDislikes
             }),
             })
             .then((r) => r.json())
+            .then(newObj =>{
+                this.setState(newObj)
+            })
     }
     showForm = ()=>{
         this.setState({
-            showForm : !this.state.showForm
+            showForm : !this.state.showForm,
+            showReviewButton: !this.state.showReviewButton
         })
     }
 
@@ -61,12 +70,19 @@ export default class GameDetail extends Component {
 
     showReviews = ()=>{
         return this.state.reviews.map(review =>{
-            return <>
-                <p>{review.review}</p>
-                <p>- {review.name}</p>
-            </>
+            return <div>
+                <p>
+                    {review.review}
+                    <br></br>
+                    - {review.name}
+
+                </p>
+                <br></br>
+                
+            </div>
         })
     }
+
 
 
     showAll = () =>{
@@ -80,39 +96,89 @@ export default class GameDetail extends Component {
           };
       
 
+
         return <>
-        <p>name: {this.props.game.name}</p>
-        <p>image url: <Image src={this.props.game.image} size='medium'/></p>
-        <p>price: {this.props.game.price !== 0 ? this.props.game.price: 'Free'}</p>
-        <p>trailer: <YouTube videoId={this.props.game.trailer} opts={opts} onReady={this._onReady} />  </p>
+        {/* <h1>{this.props.game.name}</h1> */}
+        <Grid>
+            <Grid.Column width={2}> 
+            {/* just to have a margin */}
+                <Switch>
+                    <Route path={`/games/${this.props.game.id}`} >
+                        <Link to='/games' className='links'>Back</Link>
+                    </Route>
+                </Switch>
+            </Grid.Column>
+            <Grid.Column width={4}>
+                <br></br>
+            <h1>{this.props.game.name}</h1>
+            <Image src={this.props.game.image} size='large'/>
+            </Grid.Column>
+            <Grid.Column width={4}>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+
+                <br></br>
+                <br></br>
+                <p>{this.props.game.about}</p>
+            </Grid.Column>
+            <Grid.Column width={1}> 
+            {/* just to have a margin */}
+            </Grid.Column>
+            <Grid.Column width={5}>
+                <br></br>
+                <br></br>
+                <br></br>
+                <h2>price: {this.props.game.price !== 0 ? `$${this.props.game.price}`: 'Free'}</h2>
+                <h3>Year: {this.props.game.year} </h3>
+                <p>Genres: {this.props.game.genres.join(" | ")}</p>
+                <Button.Group>
+                    <Button color="green" onClick={this.handleLikes}>
+                        Like {this.state.likes}
+                    </Button>
+
+                    <Button color="red" onClick={this.handleDislikes}>
+                        Dislike {this.state.dislikes}
+                    </Button>
+                </Button.Group>
+            </Grid.Column>
+        </Grid>
+
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
 
 
-        {/* LIKES ND DISLIKES ARE SEPARATE/WE'RE GONNA SHOW A RATIO  */}
-        <p>likes: {this.state.likes} </p>
-        <button name='like' onClick={this.handleLikes}>Like</button>
 
-        <p>dislikes: {this.state.dislikes} </p>
-        <button name='dislike' onClick={this.handleDislikes}>Dislike</button>
+        <Grid>
+            <Grid.Column width={5}>
+            </Grid.Column>
+            <Grid.Column width={8}>
+                <YouTube videoId={this.props.game.trailer} opts={opts} onReady={this._onReady} />
+                <h3>Reviews: </h3>
+                <p>{this.showReviews()}</p>
+                {this.state.showReviewButton? <Button onClick={this.showForm}>Add a Review </Button>: null}
+                {this.state.showForm ? <ReviewForm game={this.props.game} addReview={this.addReview} showForm={this.showForm} /> : null}
+            </Grid.Column>
+            <Grid.Column width={3}>
+            </Grid.Column>
+        </Grid>
 
-        <p>onSale: {this.props.game.onSale}</p>
-        <p>Year: {this.props.game.year} </p>
-        <p>Reviews: {this.showReviews()}</p>
-        <button onClick={this.showForm}>Add a Review </button>
-        {this.state.showForm ? <ReviewForm game={this.props.game} addReview={this.addReview} showForm={this.showForm}/> : null}
 
 
-        <p>Genres: {this.props.game.genres}</p>
+
+
         </>
     }
     render() {
         return (
             <div>
                 {this.showAll()}
-                <Switch>
-                    <Route path={`/games/${this.props.game.id}`} >
-                        <Link to='/games'>Back</Link>
-                    </Route>
-                </Switch>
             </div>
         )
     }
