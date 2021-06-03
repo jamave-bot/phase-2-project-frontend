@@ -24,6 +24,7 @@ export default class ReviewForm extends Component {
             })
             .then((r) => r.json())
             .then((gameObj) => {
+                this.props.showForm()
                 console.log(gameObj.reviews[gameObj.reviews.length - 1])
                 this.props.addReview(gameObj.reviews[gameObj.reviews.length - 1])
                 this.setState({

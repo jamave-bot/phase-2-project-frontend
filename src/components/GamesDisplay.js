@@ -92,15 +92,47 @@ export default class GamesDisplay extends Component {
         this.setState({
             reviews: newArr
         })
+        console.log(this.state.reviews)
+    }
+
+    deleteReview = (obj) => {
+        let copyOfReviews = this.state.reviews.filter(reviewObj => {
+            return reviewObj.review !== obj.review && reviewObj.name !== obj.name
+        })
+        this.setState({
+            reviews: copyOfReviews
+        })
+    }
+    handleDelete = (evt) => {
+        
+        const newArr = this.state.reviews.filter(reviewObj => {
+            return reviewObj.review !== this.props.game.review.map(review => {
+                return console.log(review.review)
+            })
+        })
+        console.log(newArr)
+        fetch(`http://localhost:4000/games/${this.props.game.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                reviews: newArr
+            })
+        })
+        .then(res => res.json())
+        .then(() => {
+            this.deleteReview(this.props.game.reviews)
+        })
     }
 
     showReviews = ()=>{
         return this.state.reviews.map(review =>{
-            return <>
+            return <div>
                 <p>Review: {review.review}</p>
                 <p>Name: {review.name}</p>
-                <button>Delete Review </button>
-            </>
+                <button onClick={this.handleDelete}>Delete Review</button>
+            </div>
         })
     }
 
@@ -123,7 +155,7 @@ export default class GamesDisplay extends Component {
         <p>Year: {this.props.game.Year} </p>
         <p>Reviews: {this.showReviews()}</p>
         <button onClick={this.showForm}>Add a Review </button>
-        {this.state.showForm ? <ReviewForm game={this.props.game} addReview={this.addReview}/> : ""}
+        {this.state.showForm ? <ReviewForm game={this.props.game} addReview={this.addReview} /> : ""}
 
 
         <p>Genres: {this.props.game.Genres}</p>
