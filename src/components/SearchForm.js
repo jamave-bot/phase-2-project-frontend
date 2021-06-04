@@ -12,6 +12,8 @@ export default class SearchForm extends Component {
         pvp:false,
         mmo: false,
         action: false,
+        anime: false,
+        "2d": false,
     }
 
     handleChange = (evt) =>{
@@ -19,7 +21,6 @@ export default class SearchForm extends Component {
     }
 
     handleClick = (evt) =>{
-        console.log("VALUE: ", evt.target.value)
         this.setState((prevState) => ({ [evt.target.value]: !prevState[evt.target.value] }))
         this.props.changeGenreFilter(evt.target.value)
     }
@@ -42,7 +43,7 @@ export default class SearchForm extends Component {
                     <Grid.Column width={12}>
                     <br></br>
                     <br></br>
-                    <Input fluid placeholder='Enter game name...' onChange={this.handleChange}/>
+                    <Input fluid placeholder='Enter game name...' onChange={this.handleChange} />
                     </Grid.Column>
                     <Grid.Column width={2}>
                     </Grid.Column>
@@ -55,6 +56,10 @@ export default class SearchForm extends Component {
                 <Button toggle active={this.state.pvp} value='pvp' onClick={this.handleClick}>PvP</Button>
                 <Button toggle active={this.state.mmo} value='mmo'onClick={this.handleClick}>MMO</Button>
                 <Button toggle active={this.state.action} value='action'onClick={this.handleClick}>Action</Button>
+                <Button toggle active={this.state.anime} value='anime'onClick={this.handleClick}>Anime</Button>
+                <Button toggle active={this.state["2d"]} value='2d'onClick={this.handleClick}>2D</Button>
+
+
 
 
             </div>

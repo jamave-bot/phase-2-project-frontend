@@ -7,6 +7,9 @@ import logo from '../watervaporlogo.png'
 
 
 export default class GameDetail extends Component {
+
+    API_KEY=''
+
     state={
         likes: this.props.game.likes,
         dislikes: this.props.game.dislikes,
@@ -54,6 +57,8 @@ export default class GameDetail extends Component {
                 this.setState(newObj)
             })
     }
+
+
     showForm = ()=>{
         this.setState({
             showForm : !this.state.showForm,
@@ -69,6 +74,25 @@ export default class GameDetail extends Component {
         })
     }
 
+    deleteReview = (reviewToDelete)=>{
+        let newArr = this.state.reviews.filter(review=>{
+            return (!(review.review === reviewToDelete.review) && !(review.name === reviewToDelete.name))
+        })
+    fetch(`http://localhost:4000/games/${this.props.game.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                reviews: newArr
+            }),
+            })
+            .then((r) => r.json())
+            .then(newObj =>{
+                this.setState(newObj)
+            })
+    }
+
     showReviews = ()=>{
         return this.state.reviews.map(review =>{
             return <div>
@@ -79,12 +103,16 @@ export default class GameDetail extends Component {
 
                 </p>
                 <br></br>
-                
+                <Button onClick={()=>this.deleteReview(review)}>Delete Review</Button>
             </div>
         })
     }
 
-
+    // componentDidMount(){
+    //     fetch(`http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=440&count=3&maxlength=300&format=json?key=${this.API_KEY}`)
+    //         .then(res=>res.json())
+    //         .then(obj=> console.log(obj))
+    // }
 
     showAll = () =>{
         const opts = {
@@ -163,6 +191,7 @@ export default class GameDetail extends Component {
 
         <Grid>
             <Grid.Column width={4}>
+
             </Grid.Column>
             <Grid.Column width={8}>
                 <YouTube videoId={this.props.game.trailer} opts={opts} onReady={this._onReady} />
