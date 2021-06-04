@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Switch, Link, Route} from 'react-router-dom'
 import YouTube from 'react-youtube'
 import ReviewForm from './ReviewForm'
-import { Button, Image, Grid } from 'semantic-ui-react'
+import { Button, Image, Grid, Icon, ButtonContent } from 'semantic-ui-react'
 import logo from '../watervaporlogo.png'
 
 
@@ -102,8 +102,14 @@ export default class GameDetail extends Component {
                     - {review.name}
 
                 </p>
+                <Button onClick={()=>this.deleteReview(review)} animated='vertical' basic>
+                    <Button.Content hidden>Delete</Button.Content>
+                    <Button.Content visible>
+                        <Icon name="trash"/>
+                    </Button.Content>
+                </Button>
                 <br></br>
-                <Button onClick={()=>this.deleteReview(review)}>Delete Review</Button>
+                <br></br>
             </div>
         })
     }
@@ -190,10 +196,10 @@ export default class GameDetail extends Component {
 
 
         <Grid>
-            <Grid.Column width={4}>
+            <Grid.Column width={5}>
 
             </Grid.Column>
-            <Grid.Column width={8}>
+            <Grid.Column width={7}>
                 <YouTube videoId={this.props.game.trailer} opts={opts} onReady={this._onReady} />
                 <h3>Reviews: </h3>
                 <p>{this.showReviews()}</p>
