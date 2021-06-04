@@ -119,20 +119,20 @@ export default class GameDetail extends Component {
             <h1>{this.props.game.name}</h1>
             <Image src={this.props.game.image} size='large'/>
             </Grid.Column>
-            <Grid.Column width={4}>
+            <Grid.Column width={5}>
                 <br></br>
                 <br></br>
                 <br></br>
                 <br></br>
-                <br></br>
+                
 
-                <br></br>
+                
                 <br></br>
                 <p>{this.props.game.about}</p>
             </Grid.Column>
-            <Grid.Column width={1}> 
-            {/* just to have a margin */}
-            </Grid.Column>
+            {/* <Grid.Column width={1}> 
+            just to have a margin
+            </Grid.Column> */}
             <Grid.Column width={5}>
                 <br></br>
                 <br></br>
