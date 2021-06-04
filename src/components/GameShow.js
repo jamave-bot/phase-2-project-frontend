@@ -5,8 +5,6 @@ const GameShow = ({ match, games }) => {
     const matchingGame = games.find(game => {
         return game.id.toString() === match.params.gameId})
     
-
-    console.log(matchingGame)
     return (
         <div>
             <GameDetail

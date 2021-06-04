@@ -25,6 +25,14 @@ export default class SearchForm extends Component {
         this.props.changeGenreFilter(evt.target.value)
     }
 
+    componentDidMount(){
+        this.props.genreFilter.forEach(genre=>{
+            this.setState({
+                [genre]: !this.state[genre]
+            })
+        })
+    }
+
     render() {
         return (
             <div className="searchForm">

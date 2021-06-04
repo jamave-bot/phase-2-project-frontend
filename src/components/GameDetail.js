@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Switch, Link, Route} from 'react-router-dom'
 import YouTube from 'react-youtube'
 import ReviewForm from './ReviewForm'
-import { Button, Image, Grid, Icon, ButtonContent } from 'semantic-ui-react'
+import { Button, Image, Grid, Icon } from 'semantic-ui-react'
 import logo from '../watervaporlogo.png'
 
 
