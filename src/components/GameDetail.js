@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Switch, Link, Route} from 'react-router-dom'
 import YouTube from 'react-youtube'
 import ReviewForm from './ReviewForm'
-import { Button, Image, Grid, Icon } from 'semantic-ui-react'
+import { Button, Image, Grid, Icon, Progress } from 'semantic-ui-react'
 import logo from '../watervaporlogo.png'
 
 
@@ -17,6 +17,14 @@ export default class GameDetail extends Component {
         reviews: this.props.game.reviews,
         showReviewButton: true
     }
+
+
+    // componentDidMount(){
+    //     this.setState({
+    //         likes: this.props.likes,
+    //         dislikes: this.props.dislikes
+    //     })
+    // }
     handleLikes = ()=>{
         let likes = this.state.likes
         let newLikes = likes += 1         
@@ -173,14 +181,15 @@ export default class GameDetail extends Component {
                 <br></br>
                 <h2>price: {this.props.game.price !== 0 ? `$${this.props.game.price}`: 'Free'}</h2>
                 <h3>Year: {this.props.game.year} </h3>
-                <p>Genres: {this.props.game.genres.join(" | ")}</p>
+                <p>Genres: {this.props.game.genres.join(" | ")}</p> 
+                <Progress percent={Math.round((this.state.likes/(this.state.likes + this.state.dislikes)) * 100)} progress color='green' size='small' className='likesBar'/>
                 <Button.Group>
                     <Button color="green" onClick={this.handleLikes}>
                         Like: {this.state.likes}
                     </Button>
 
                     <Button color="red" onClick={this.handleDislikes}>
-                        Dislike: {this.state.dislikes}
+                        Dislike: {this.state.dislikes} 
                     </Button>
                 </Button.Group>
             </Grid.Column>
