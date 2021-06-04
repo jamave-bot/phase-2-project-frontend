@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { Input, Button, Grid } from 'semantic-ui-react'
+import { Input, Button, Grid, Image } from 'semantic-ui-react'
+import {Switch, Link, Route} from 'react-router-dom'
+import logo from '../watervaporlogo.png'
 
 export default class SearchForm extends Component {
 
@@ -25,11 +27,21 @@ export default class SearchForm extends Component {
     render() {
         return (
             <div className="searchForm">
-                <br></br>
                 <Grid>
                     <Grid.Column width={2}>
+                        <Switch>
+                            <Route path='/games'>
+                                <Link to="/" className='links'>
+                                    <br></br>
+                                    <Image src={logo} alt='WV logo' className='smallLogo' />
+                                        Home
+                                </Link>
+                            </Route>
+                        </Switch>
                     </Grid.Column>
                     <Grid.Column width={12}>
+                    <br></br>
+                    <br></br>
                     <Input fluid placeholder='Enter game name...' onChange={this.handleChange}/>
                     </Grid.Column>
                     <Grid.Column width={2}>

@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import {Switch, Link, Route} from 'react-router-dom'
 import YouTube from 'react-youtube'
 import ReviewForm from './ReviewForm'
-import { Button, Image, Grid, Segment } from 'semantic-ui-react'
+import { Button, Image, Grid } from 'semantic-ui-react'
+import logo from '../watervaporlogo.png'
 
 
 export default class GameDetail extends Component {
@@ -104,7 +105,12 @@ export default class GameDetail extends Component {
             {/* just to have a margin */}
                 <Switch>
                     <Route path={`/games/${this.props.game.id}`} >
-                        <Link to='/games' className='links'>Back</Link>
+                        <Link to='/games' className='links'>
+                            <br></br>
+                            
+                            <Image src={logo} alt='WV logo' className='smallLogo'/>
+                            <p className='backText'>Back</p>
+                        </Link>
                     </Route>
                 </Switch>
             </Grid.Column>
@@ -136,11 +142,11 @@ export default class GameDetail extends Component {
                 <p>Genres: {this.props.game.genres.join(" | ")}</p>
                 <Button.Group>
                     <Button color="green" onClick={this.handleLikes}>
-                        Like {this.state.likes}
+                        Like: {this.state.likes}
                     </Button>
 
                     <Button color="red" onClick={this.handleDislikes}>
-                        Dislike {this.state.dislikes}
+                        Dislike: {this.state.dislikes}
                     </Button>
                 </Button.Group>
             </Grid.Column>
@@ -156,7 +162,7 @@ export default class GameDetail extends Component {
 
 
         <Grid>
-            <Grid.Column width={5}>
+            <Grid.Column width={4}>
             </Grid.Column>
             <Grid.Column width={8}>
                 <YouTube videoId={this.props.game.trailer} opts={opts} onReady={this._onReady} />
@@ -165,7 +171,7 @@ export default class GameDetail extends Component {
                 {this.state.showReviewButton? <Button onClick={this.showForm}>Add a Review </Button>: null}
                 {this.state.showForm ? <ReviewForm game={this.props.game} addReview={this.addReview} showForm={this.showForm} /> : null}
             </Grid.Column>
-            <Grid.Column width={3}>
+            <Grid.Column width={4}>
             </Grid.Column>
         </Grid>
 

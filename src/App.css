@@ -16,3 +16,24 @@ a.links{
   margin: auto;
   text-align: center;
 }
+
+.logo{
+  width: 50%;
+  margin: auto;
+  margin-top: 10em;
+}
+
+.enter{
+  margin: auto;
+  text-align: center;
+}
+
+.smallLogo{
+  width: 70%;
+  margin: auto;
+}
+
+.backText{
+  margin: auto;
+  text-align: center;
+}

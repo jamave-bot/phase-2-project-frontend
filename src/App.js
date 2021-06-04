@@ -3,6 +3,7 @@ import GamesCollection from './components/GamesCollection'
 import { Switch, Route, Link} from 'react-router-dom'
 import React, { Component } from 'react'
 import {Image} from 'semantic-ui-react'
+import waterVapor from './watervapor.png'
 
 export default class App extends Component {
   state ={
@@ -32,7 +33,8 @@ export default class App extends Component {
           <Route path={'/'}>
             
             <Link to={'/games'} className='links'>
-              <Image src="/home/jamave/Development/code/Mod2/project/frontend/src/watervapor.png" alt="Our WV logo"/>
+              <Image className='logo' src={waterVapor} alt="Our WV logo"/>
+              <h1 className='enter'>Enter</h1>
               
             </Link>
           </Route>
