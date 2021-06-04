@@ -59,7 +59,7 @@ export default class GamesCollection extends React.Component {
                       render={routerProps => <GameShow {...routerProps} games={this.props.games}/>}
                   />
                   <Route path={'/games'} >
-                      <SearchForm changeSearchTerm={this.changeSearchTerm} changeGenreFilter={this.changeGenreFilter} genreFilter={this.state.genreFilter}/>
+                      <SearchForm changeSearchTerm={this.changeSearchTerm} changeGenreFilter={this.changeGenreFilter} genreFilter={this.state.genreFilter} searchTerm={this.state.searchTerm}/>
                       <GamesList games={this.state.genreFilter.length? filteredByGenreArr : filteredByNameArr} />
                   </Route>
               </Switch>

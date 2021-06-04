@@ -51,7 +51,7 @@ export default class SearchForm extends Component {
                     <Grid.Column width={12}>
                     <br></br>
                     <br></br>
-                    <Input fluid placeholder='Enter game name...' onChange={this.handleChange} />
+                    <Input fluid placeholder='Enter game name...' onChange={this.handleChange} value={this.props.searchTerm}/>
                     </Grid.Column>
                     <Grid.Column width={2}>
                     </Grid.Column>
